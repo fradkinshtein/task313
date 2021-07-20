@@ -33,6 +33,10 @@ public class AdminRestController {
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok().body(this.userService.getAll());
     }
+    @GetMapping("user/{id}")
+    public ResponseEntity<User> getUser(@PathVariable(value = "id") Long userId ) {
+        return ResponseEntity.ok().body(this.userService.getUserById(userId));
+    }
 
     @PostMapping("addUser")
     public ResponseEntity<User> createUser(@RequestBody User user) {
@@ -78,5 +82,9 @@ public class AdminRestController {
         user.setRoles(editUser.getRoles());
         userService.updateUser(user);
         return ResponseEntity.ok().body(user);
+    }
+    @DeleteMapping("deleteUser/{id}")
+    public void deleteUser(@PathVariable(value = "id") Long userId) {
+        userService.delete(userId);
     }
 }

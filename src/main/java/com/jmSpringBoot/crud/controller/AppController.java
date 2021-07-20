@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.Set;
 
 @Controller
@@ -28,13 +29,14 @@ public class AppController {
 
 
     @RequestMapping("/admin")
-    public ModelAndView mainAdminPage() {
+    public ModelAndView mainAdminPage(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin");
+        modelAndView.addObject("currentUser", userService.getUserByName(principal.getName()));
         return modelAndView;
     }
     @GetMapping("/user")
-    public String userPage(Model model) {
+    public String userPage(Model model, Principal principal) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         Set<String> roles = AuthorityUtils.authorityListToSet(auth.getAuthorities());
@@ -46,6 +48,7 @@ public class AppController {
         }
         model.addAttribute("hasAdmin", hasAdmin);
         model.addAttribute("userName", name);
+        model.addAttribute("currentUser", userService.getUserByName(principal.getName()));
         return "user";
     }
 

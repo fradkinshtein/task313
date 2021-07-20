@@ -14,19 +14,91 @@
     <script type="text/javascript" src="/js/fillModalForm.js"></script>
     <script type="text/javascript" src="/js/getAllModalRoles.js"></script>
     <script type="text/javascript" src="/js/updateUserFromModal.js"></script>
+    <script type="text/javascript" src="/js/deleteUser.js"></script>
 
     <title>Admin page</title>
+    <style type="text/css">
+
+
+        .logged_user {
+            padding-left: 10px;
+            background: #4A4646;
+            color: ghostwhite;
+            display: flex;
+
+        }
+
+        .link_logout {
+            padding-right: 10px;
+            display: flex;
+            vertical-align: auto;
+
+        }
+
+        .line-1 {
+
+            border-bottom: 4px blue;
+        }
+
+        .tab-pane {
+            width: 300px;
+        }
+
+        .header1 {
+
+            background: #4A4646; /* green background */
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            vertical-align: center;
+
+        }
+
+        .nav-link {
+            width: 120px;
+        }
+
+        .nav-link active {
+            width: 120px;
+        }
+
+        .col-3 {
+            width: 130px;
+        }
+
+        h4 {
+            text-decoration: underline;
+        }
+
+        .tdd {
+            width: 200px;
+        }
+
+    </style>
 </head>
 <body>
+<header class="header1">
 
-<nav class="navbar bg-dark">
-    <span class="navbar-brand mb-1 text-secondary">Project name</span>
-    <ul class="nav justify-content-end pl-1 bg-dark">
-        <li class="nav-item ">
-            <a class="nav-link" href="/logout"><span class="font-weight-normal text-secondary">Logout</span></a>
-        </li>
-    </ul>
-</nav>
+    <div class="logged_user">
+
+        <table class="table1" border="0 px">
+            <tbody>
+            <tr>
+                <td> Logged as:&nbsp;&nbsp;</td>
+                <td th:text="${currentUser.getEmail()}"></td>
+                <td> &nbsp; &nbsp; With role: &nbsp;</td>
+                <td><span th:each="role : ${currentUser.getRoles()}"
+                          th:text="${#strings.replace(role.getRole(), 'ROLE_', ' ')}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="link_logout">
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+
+</header>
+
 
 <div class="container-fluid bg-light">
     <div class="row h-100 ">
@@ -64,6 +136,7 @@
                                     <th>Password</th>
                                     <th>Email</th>
                                     <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -71,32 +144,32 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!--end allUsers table -->
+                        <!--end allUsers table tab -->
 
-                        <!--add User -->
+                        <!--add User tab -->
                         <div class="tab-pane fade" id="addUser" role="tabpanel">
                             <div class="h6 border rounded p-2 bg-light text-left font-weight-bold">Add new user
                             </div>
                             <div class="text-center">
-                                <div class="form-group w-25 m-auto">
+                                <div class="form-group  m-auto">
                                     <label class="font-weight-bold text-center" for="inputEmail">Email</label>
                                     <input type="text" class="form-control mb-3" id="inputEmail"
                                            placeholder="Enter email">
                                 </div>
-                                <div class="form-group w-25 m-auto p-auto">
+                                <div class="form-group m-auto p-auto">
                                     <label class="font-weight-bold" for="inputLogin">Login</label>
                                     <input type="text" class="form-control mb-3" id="inputLogin" placeholder="Login">
                                 </div>
-                                <div class="form-group w-25 m-auto">
+                                <div class="form-group  m-auto">
                                     <label class="font-weight-bold" for="inputPassword">Password</label>
                                     <input type="password" class="form-control mb-3" id="inputPassword"
                                            placeholder="Password">
                                 </div>
-                                <div class="form-group w-25 m-auto">
+                                <div class="form-group  m-auto">
                                     <label class="font-weight-bold" for="newUser-role">Role</label>
                                     <select class="form-control mb-3" id="newUser-role" required ></select>
                                 </div>
-                                <div class="form-group w-25 m-auto">
+                                <div class="form-group  m-auto">
                                     <button id="addUserButton" type="button"
                                             class="btn btn-success my-3 d-block mx-auto">Add new User
                                     </button>
@@ -168,7 +241,64 @@
         </div>
     </div>
 </div>
+<div class="modal fade"
+     id="deleteModal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content" >
+            <div class="modal-header">
+                <h5 class="modal-title"
+                    id="deleteModalLabel">
+                    User deletion....
+                </h5>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="bg-white text-center">
+                    <div class="form-group w-50 m-auto">
+                        <label for="delModalId"
+                               class="col-form-label">ID</label>
+                        <input id="delModalId" type="text" name="id" class="form-control" readonly>
+                    </div>
+                    <div class="form-group w-50 m-auto">
+                        <label for="delModalEmail" class="col-form-label">Email</label>
+                        <input id="delModalEmail" class="form-control" type="text" placeholder="Email" readonly>
+                    </div>
+                    <div class="form-group w-50 m-auto">
+                        <label for="delModalLogin"
+                               class="col-form-label">Login</label>
+                        <input id="delModalLogin" class="form-control" type="text" placeholder="Login" readonly>
+                    </div>
+                    <div class="form-group w-50 m-auto">
+                        <label for="delModalPassword"
+                               class="col-form-label">Password</label>
+                        <input id="delModalPassword" class="form-control" type="text" placeholder="Password" readonly>
+                    </div>
+                    <div class="form-group w-50 m-auto">
+                        <label for="delModalRole"
+                               class="col-form-label">Role</label>
+                        <input id="delModalRole" class="form-control text-secondary" type="text" readonly>
 
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button id="deleteUser" class="btn btn-primary">Delete user</button>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- Bootstrap CSS -->
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">

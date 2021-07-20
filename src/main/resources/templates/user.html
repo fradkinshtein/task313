@@ -10,17 +10,87 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <title>Login page</title>
+    <style type="text/css">
+
+
+        .logged_user {
+            padding-left: 10px;
+            background: #4A4646;
+            color: ghostwhite;
+            display: flex;
+
+        }
+
+        .link_logout {
+            padding-right: 10px;
+            display: flex;
+            vertical-align: auto;
+
+        }
+
+        .line-1 {
+
+            border-bottom: 4px blue;
+        }
+
+        .tab-pane {
+            width: 300px;
+        }
+
+        .header1 {
+
+            background: #4A4646; /* green background */
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            vertical-align: center;
+
+        }
+
+        .nav-link {
+            width: 120px;
+        }
+
+        .nav-link active {
+            width: 120px;
+        }
+
+        .col-3 {
+            width: 130px;
+        }
+
+        h4 {
+            text-decoration: underline;
+        }
+
+        .tdd {
+            width: 200px;
+        }
+
+    </style>
 </head>
 <body>
+<header class="header1">
 
-<nav class="navbar bg-dark">
-    <span class="navbar-brand mb-1 text-secondary">Project name</span>
-    <ul class="nav justify-content-end pl-1 bg-dark">
-        <li class="nav-item ">
-            <a class="nav-link" href="/logout"><span class="font-weight-normal text-secondary">Logout</span></a>
-        </li>
-    </ul>
-</nav>
+    <div class="logged_user">
+
+        <table class="table1" border="0 px">
+            <tbody>
+            <tr>
+                <td> Logged as:&nbsp;&nbsp;</td>
+                <td th:text="${currentUser.getEmail()}"></td>
+                <td> &nbsp; &nbsp; With role: &nbsp;</td>
+                <td><span th:each="role : ${currentUser.getRoles()}"
+                          th:text="${#strings.replace(role.getRole(), 'ROLE_', ' ')}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="link_logout">
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+
+</header>
 
 <div class="container-fluid bg-light">
     <div class="row h-100 ">

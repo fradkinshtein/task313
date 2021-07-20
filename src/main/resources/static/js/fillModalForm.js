@@ -1,19 +1,3 @@
-/*function fillUpdateModalForm(id) {
-    $.ajax({
-        url: '/api/users/' + id,
-        method: "GET",
-        dataType: "json",
-        success: function (data) {
-            $('#modalId').val(data.id);
-            $('#modalName').val(data.name);
-            $('#modalLogin').val(data.login);
-            $('#modalPassword').val(data.password);
-        },
-        error: function (error) {
-            alert(error);
-        }
-    })
-}*/
 
 function fillModalForm(id){
     let url = "/rest/updateUser/"+id;
@@ -23,6 +7,18 @@ function fillModalForm(id){
             $('#inputModalEmail').val(data.email);
             $('#inputModalLogin').val(data.login);
             $('#inputModalPassword').val(data.password);
+        });
+    });
+}
+function fillDelForm(id){
+    let url = "/rest/user/"+id;
+    fetch(url).then(function(response) {
+        response.json().then(function(data) {
+            $('#delModalId').val(data.id);
+            $('#delModalEmail').val(data.email);
+            $('#delModalLogin').val(data.login);
+            $('#delModalPassword').val(data.password);
+            $('#delModalRole').val('USER');
         });
     });
 }
