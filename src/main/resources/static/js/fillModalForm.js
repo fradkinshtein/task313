@@ -18,7 +18,7 @@ function fillDelForm(id){
             $('#delModalEmail').val(data.email);
             $('#delModalLogin').val(data.login);
             $('#delModalPassword').val(data.password);
-            $('#delModalRole').val('USER');
+            $('#delModalRole').val(data.roles[0].role);
         });
     });
 }

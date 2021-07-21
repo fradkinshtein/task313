@@ -12,7 +12,7 @@ $(document).ready(function () {
             roleValue = "ROLE_USER";
         }
 
-        // Create JSON object
+
         let addData = {
             email: $('#inputEmail').val(),
             login: $('#inputLogin').val(),
