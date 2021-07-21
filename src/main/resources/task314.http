@@ -1,0 +1,31 @@
+GET http://91.241.64.178:7081/api/users
+###
+POST http://91.241.64.178:7081/api/users
+Content-Type: application/json
+
+{
+  "id": 3,
+  "name": "James",
+  "lastName": "Brown",
+  "age": 25
+}
+###
+PUT http://91.241.64.178:7081/api/users
+Content-Type: application/json
+
+{
+  "id": 3,
+  "name": "Thomas",
+  "lastName": "Shelby",
+  "age": 26
+}
+###
+DELETE http://91.241.64.178:7081/api/users/3
+Content-Type: application/json
+
+{
+  "id": 3,
+  "name": "Thomas",
+  "lastName": "Shelby",
+  "age": 26
+}

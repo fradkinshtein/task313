@@ -24,7 +24,7 @@ $(document).ready(function () {
             }]
         };
 
-        // DO POST
+
         fetch("/rest/addUser", {
             method: 'post',
             body: JSON.stringify(addData),
