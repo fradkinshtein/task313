@@ -68,6 +68,7 @@
         }
 
     </style>
+
 </head>
 <body>
 <header class="header1">
@@ -92,6 +93,8 @@
 
 </header>
 
+
+
 <div class="container-fluid bg-light">
     <div class="row h-100 ">
         <div class="col-2 bg-white py-3 px-0 vh-100">
@@ -106,9 +109,40 @@
                     <h2 class="pb-2">Hello, <span th:text="${userName}"></span> !!!</h2>
                 </div>
             </div>
+            <TABLE th:border="1px">
+                <tr><h4>User</h4></tr>
+                <tr>
+                    <th> Name</th>
+                    <th> Login</th>
+                    <th> Email</th>
+                    <th> Role</th>
+                </tr>
+                <tr>
+                    <td> <div sec:authentication="name"></div></td>
+                    <td> <div sec:authentication="name"></div></td>
+                    <td> <div sec:authentication="name"></div></td>
+                    <td> <div sec:authentication="name"></div></td>
+<!--                    <td> <div sec:authentication="principal.getUsername()"></div></td>-->
+<!--                    <td> <div sec:authentication="principal.getAuthorities()"></div></td>-->
+                </tr>
+            </TABLE>
         </div>
+
     </div>
 </div>
+
+<h2>Welcome</h2>
+<p>Spring Security Thymeleaf tutorial</p>
+<div sec:authorize="hasRole('USER')">Text visible to user.</div>
+<div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
+<div sec:authorize="isAuthenticated()">
+    Text visible only to authenticated users.
+</div>
+Authenticated username:
+<div sec:authentication="name"></div>
+Authenticated user roles:
+<div sec:authentication="principal.authorities"></div>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
