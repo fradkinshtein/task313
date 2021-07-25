@@ -112,16 +112,16 @@
             <TABLE th:border="1px">
                 <tr><h4>User</h4></tr>
                 <tr>
-                    <th> Name</th>
                     <th> Login</th>
                     <th> Email</th>
                     <th> Role</th>
                 </tr>
                 <tr>
                     <td> <div sec:authentication="name"></div></td>
-                    <td> <div sec:authentication="name"></div></td>
-                    <td> <div sec:authentication="name"></div></td>
-                    <td> <div sec:authentication="name"></div></td>
+                    <td> <span th:text="${currentUser.getEmail()}"/></td>
+                    <td> <span th:each="role : ${currentUser.getRoles()}"
+                               th:text="${#strings.replace(role.getRole(), 'ROLE_', ' ')}"></span></td>
+
 <!--                    <td> <div sec:authentication="principal.getUsername()"></div></td>-->
 <!--                    <td> <div sec:authentication="principal.getAuthorities()"></div></td>-->
                 </tr>

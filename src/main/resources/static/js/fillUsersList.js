@@ -16,7 +16,7 @@ function getAllUsers(){
                     <td class="font-weight-normal">${user.id}</td> 
                     <td class="font-weight-normal">${stringRoles}</td> 
                     <td class="font-weight-normal">${user.login}</td> 
-                    <td class="font-weight-normal">${user.password}</td> 
+<!--                    <td class="font-weight-normal">${user.password}</td> -->
                     <td class="font-weight-normal">${user.email}</td> 
                     <td><button id="updateButton" class="btn btn-info" role="button" data-toggle="modal" 
                     data-target="#exampleModal" onclick = 'fillModalForm(${user.id})'>Edit</button></td> 

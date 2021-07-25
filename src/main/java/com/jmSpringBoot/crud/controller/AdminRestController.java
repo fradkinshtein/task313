@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +37,11 @@ public class AdminRestController {
     @GetMapping("user/{id}")
     public ResponseEntity<User> getUser(@PathVariable(value = "id") Long userId ) {
         return ResponseEntity.ok().body(this.userService.getUserById(userId));
+    }
+
+    @GetMapping("/getPrincipal")
+    public Principal getPrincipal(Principal principal){
+        return principal;
     }
 
     @PostMapping("addUser")
